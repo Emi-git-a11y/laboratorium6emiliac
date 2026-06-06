@@ -5,9 +5,37 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>lab6emi</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <header>
+      <h1 class="text-2xl text-primary">Zadanie 6 - Emilia Ciemięga</h1>
+    </header>
+    <main>
+      <div id="mydatabase"></div>
+      <h2 class="px-8">Dodaj własny artykuł:</h2>
+      <form id="form" class="p-8">
+        <label for="titlePicker">Tytuł:</label>
+        <input class="inputFrame" id="titlePicker" type="text"/><br>
+        <label for="subtitlePicker">Podtytuł:</label>
+        <input class="inputFrame" id="subtitlePicker" type="text"/><br>
+        <label for="authorPicker">Autor:</label>
+        <input class="inputFrame" id="authorPicker" type="text"/><br>
+        <label for="tagPicker">Tagi:</label>
+        <input class="inputFrame" id="tagPicker" type="text"/><br>
+        <label for="datepicker">Data utworzenia:</label>
+        <input class="inputFrame" id="datepicker" type="date"/><br>
+        <label for="contentPicker">Treść:</label>
+        <input class="inputFrame"  id="contentPicker" type="text"/><br>
+        <button type="submit" id="submitbutton">Submit</button><br>
+      </form>d
+      <dialog id="info-dialog">
+        <button commandfor="info-dialog" command="close" id="close-dialog">✕</button>
+        <p id="dialog-days-result"></p>
+        <p id="dialog-weeks-result"></p>
+      </dialog>
+      <script type="module" src="/src/main.js"></script>
+    </main>
   </body>
 </html>
+
