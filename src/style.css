@@ -31,25 +31,6 @@ h3{
   cursor: pointer;
 }
 
-#info-dialog {
-  @apply p-5 bg-gray-200;
-  position: relative;
-  top: 4vw;
-  left: 38vw;
-}
-
-#close-dialog {
-  position: absolute;
-  top: 7px;
-  right: 12px;
-  cursor: pointer;
-}
-
-#dialog-form-result{
-  @apply text-red-600;
-  padding: 15px 20px 15px 15px;
-}
-
 .inputFrame {
   border: 3px;
   border-style: solid;

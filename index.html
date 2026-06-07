@@ -12,28 +12,33 @@
       <h1 class="text-2xl text-primary">Zadanie 6 - Emilia Ciemięga</h1>
     </header>
     <main>
+      <div class="px-8 py-4">
+        <label for="sortingSelect" class="font-medium">Sortowanie:</label>
+        <select id="sortingSelect" class="inputFrame">
+          <option value="created_at.asc">po dacie rosnąco</option>
+          <option value="created_at.desc">po dacie malejąco</option>
+          <option value="title.asc">po nazwie alfabetycznie</option>
+        </select>
+      </div>
       <div id="mydatabase"></div>
-      <h2 class="px-8">Dodaj własny artykuł:</h2>
-      <form id="form" class="p-8">
-        <label for="titlePicker">Tytuł:</label>
-        <input class="inputFrame" id="titlePicker" type="text"/><br>
-        <label for="subtitlePicker">Podtytuł:</label>
-        <input class="inputFrame" id="subtitlePicker" type="text"/><br>
-        <label for="authorPicker">Autor:</label>
-        <input class="inputFrame" id="authorPicker" type="text"/><br>
-        <label for="tagPicker">Tagi:</label>
-        <input class="inputFrame" id="tagPicker" type="text"/><br>
-        <label for="datepicker">Data utworzenia:</label>
-        <input class="inputFrame" id="datepicker" type="date"/><br>
-        <label for="contentPicker">Treść:</label>
-        <input class="inputFrame"  id="contentPicker" type="text"/><br>
-        <button type="submit" id="submitbutton">Submit</button><br>
-      </form>d
-      <dialog id="info-dialog">
-        <button commandfor="info-dialog" command="close" id="close-dialog">✕</button>
-        <p id="dialog-days-result"></p>
-        <p id="dialog-weeks-result"></p>
-      </dialog>
+      <div id="addContentToDB">
+        <h2 class="px-8">Dodaj własny artykuł:</h2>
+        <form id="form" class="p-8">
+          <label for="titlePicker">Tytuł:</label>
+          <input class="inputFrame" id="titlePicker" type="text" required/><br>
+          <label for="subtitlePicker">Podtytuł:</label>
+          <input class="inputFrame" id="subtitlePicker" type="text"/><br>
+          <label for="authorPicker">Autor:</label>
+          <input class="inputFrame" id="authorPicker" type="text"/><br>
+          <label for="tagPicker">Tagi:</label>
+          <input class="inputFrame" id="tagPicker" type="text"/><br>
+          <label for="datepicker">Data utworzenia:</label>
+          <input class="inputFrame" id="datepicker" type="date"/><br>
+          <label for="contentPicker">Treść:</label>
+          <input class="inputFrame"  id="contentPicker" type="text"/><br>
+          <button type="submit" id="submitbutton">Submit</button><br>
+        </form>
+      </div>
       <script type="module" src="/src/main.js"></script>
     </main>
   </body>

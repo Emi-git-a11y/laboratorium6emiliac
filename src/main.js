@@ -1,47 +1,13 @@
 import './style.css'
-import {differenceInDays, ifBirthday, differenceInWeeks, displayArticles } from './functions.js'
+import {createNewArticle} from './functions.js'
 import dayjs from 'dayjs'
 
-const date = document.getElementById("datepicker");
-const form = document.getElementById("form");
-const dialog = document.getElementById("info-dialog")
-const closeButtonX = document.getElementById("close-dialog");
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const dateInp = date.value;
-    const answerInDays = differenceInDays(dateInp)
-    if(!isNaN(answerInDays)){
-      if(answerInDays>0 || ifBirthday(dateInp)){
-        document.getElementById("dialog-days-result").innerHTML="Twoje urodziny były " + answerInDays + " dni temu."
-        if(ifBirthday(dateInp)){
-        document.getElementById("dialog-days-result").innerHTML+=" Wszystkiego najlepszego!!!"
-        }
-      }
-      else{
-        document.getElementById("dialog-days-result").innerHTML="Twoje urodziny będą za " + (-answerInDays+1) + " dni.";
-        if(answerInDays<=0 && !ifBirthday(dateInp)){
-            const answerInWeeks = differenceInWeeks(dateInp);
-            document.getElementById("dialog-weeks-result").innerHTML="Masz urodziny za " + answerInWeeks + " tygodnie."
-            if(answerInWeeks==0){
-              document.getElementById("dialog-weeks-result").innerHTML+=" Masz urodziny w tym tygodniu!"
-            }
-          }
-      }
-    }else{
-      document.getElementById("dialog-days-result").innerHTML="Musisz wybrać datę!"
-    }
-    dialog.showModal();
-});
-closeButtonX.addEventListener("click", () => {
-  dialog.close();
-});
-
 const articlesTable = document.getElementById("mydatabase");
-
-
-const displayTheArticles = async () => {
+const sortingSelect = document.getElementById("sortingSelect");
+const displayTheArticles = async (sortQuery = "created_at.asc") => {
  try {
-  const response = await fetch('https://jtpolkcgjrsfmwbuefyr.supabase.co/rest/v1/article', {
+  const url = `https://jtpolkcgjrsfmwbuefyr.supabase.co/rest/v1/article?order=${sortQuery}`;
+  const response = await fetch(url, {
     //body: JSON.stringify({}),
     headers: {
     'Content-Type': 'application/json',
@@ -51,7 +17,7 @@ const displayTheArticles = async () => {
   });
   const data = await response.json();
   
-  //articlesTable.innerHTML += JSON.stringify(data);
+  //articlesTable.innerHTML += JSON.stringify(data); //debug
   let articles="<ol>";
   data.forEach((articleInDB)=>{
     const formattedDate = dayjs(articleInDB.created_at).format("DD-MM-YYYY");
@@ -79,6 +45,39 @@ const displayTheArticles = async () => {
     articlesTable.innerHTML = `Błąd: ${error.message}`;
   }
 };
+
+sortingSelect.addEventListener('change', function(e) {
+    // e.target.value zwróci np. "created_at.desc" lub "title.asc"
+    displayTheArticles(e.target.value);
+});
+
+const form = document.getElementById("form");
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const titleInp = document.getElementById("titlePicker").value;
+    const subtitleInp = document.getElementById("subtitlePicker").value;
+    const authorInp = document.getElementById("authorPicker").value;
+    const contentInp = document.getElementById("contentPicker").value;
+    const dateInp = document.getElementById("datepicker").value;
+    const tagsInp = document.getElementById("tagPicker").value;
+    const tagsArray = tagsInp ? tagsInp.split(',').map(tag => tag.trim()) : [];
+    const articleObject = {
+        author: authorInp,
+        title: titleInp,
+        subtitle: subtitleInp,
+        content: contentInp,
+        tags: tagsArray
+    };
+    if (dateInp) {
+        articleObject.created_at = dateInp;
+    }
+    const success = await createNewArticle(articleObject);
+    if (success) {
+        form.reset();
+        await displayTheArticles(sortingSelect.value);
+    }
+});
+
 
 
 displayTheArticles();
